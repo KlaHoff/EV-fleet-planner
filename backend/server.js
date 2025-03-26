@@ -40,12 +40,15 @@ const calculateFleetStats = (evs) => {
 app.post("/calculate", (req, res) => {
   const { evs } = req.body;
 
+  // Validate input: Ensure we receive an array
   if (!Array.isArray(evs)) {
     return res.status(400).json({ error: "Invalid input" });
   }
 
+  // Perform calculations and return results
   const result = calculateFleetStats(evs);
   res.json(result);
 });
 
+// Start the server and listen on PORT 5001
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
