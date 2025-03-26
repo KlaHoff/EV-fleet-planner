@@ -1,5 +1,6 @@
 import { useEVFleet } from "../context/EVFleetProvider";
 import EVCard from "../components/EVCard";
+import FleetSummary from "../components/FleetSummary";
 
 const Dashboard = () => {
   const { evs, addEV } = useEVFleet(); // Access global EV list and the function to add a new EV
@@ -25,6 +26,8 @@ const Dashboard = () => {
         </div>
 
         <div className="right-panel">
+          {/* This component reflects computed insights across the whole EV fleet */}
+          <FleetSummary />
         </div>
       </div>
     </div>
