@@ -47,14 +47,14 @@ export const EVFleetProvider = ({ children }) => {
     }
   };
 
+  // Watch for any EV state changes
   useEffect(() => {
+    // Only calculate insights if all fields are valid
+    // However, it keeps the last valid results visible in the UI (not ideal)
     const isValid = evs.length > 0 && evs.every(isEVValid);
-
-    // Prevents recalculating insights when EV input is invalid.
-    // however, it keeps the last valid results visible in the UI (not ideal)
-    if (isValid) {
-      calculateFleetInsights(evs);
-    }
+    isValid
+      ? calculateFleetInsights(evs)
+      : setInsights({ totalEnergyDemand: 0, results: [] }); // Clear if invalid
   }, [evs]);
 
   // Makes all logic and state available to children via context
