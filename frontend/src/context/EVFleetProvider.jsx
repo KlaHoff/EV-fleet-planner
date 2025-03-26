@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
-import { EV_TYPES, getDefaultEV, applyTypeDefaults, API_URL } from "../config/defaults";
+import { EV_TYPES, getDefaultEV, applyTypeDefaults } from "../config/defaults";
+import { calculateFleetStats } from "../utils/calculateFleetStats";
+
 import { isEVValid } from "../utils/validation";
 
 // Create context to share EV fleet state across the app
@@ -37,15 +38,10 @@ export const EVFleetProvider = ({ children }) => {
     setEvs(prev => prev.filter(ev => ev.id !== id));
   };
 
-  const calculateFleetInsights = async (validEvs) => {
-    try {
-      // Sends only validated EVs to the backend for calculations
-      const { data } = await axios.post(`${API_URL}/calculate`, { evs: validEvs });
-      setInsights(data); // Triggers UI updates wherever insights are used
-    } catch (error) {
-      console.error("Error calculating fleet insights:", error);
-    }
-  };
+  const calculateFleetInsights = (validEvs) => {
+    const result = calculateFleetStats(validEvs);
+    setInsights(result);
+  };  
 
   // Watch for any EV state changes
   useEffect(() => {

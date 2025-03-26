@@ -1,5 +1,3 @@
-export const API_URL = import.meta.env.VITE_API_URL;
-
 // Efficiency values for different vehicle types
 export const EV_TYPES = {
   Car: { efficiency: 4.5 },
